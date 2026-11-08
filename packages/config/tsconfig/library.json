@@ -1,0 +1,5 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "display": "FortyEight shared library (no DOM, no Node globals)",
+  "extends": "./base.json"
+}

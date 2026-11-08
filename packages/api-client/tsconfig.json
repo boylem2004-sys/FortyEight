@@ -1,0 +1,8 @@
+{
+  "extends": "@fortyeight/config/tsconfig/library.json",
+  "compilerOptions": {
+    // fetch, Request, and Response types. Present on web, Node 18+, and React Native.
+    "lib": ["ES2022", "DOM"]
+  },
+  "include": ["src", "vitest.config.ts"]
+}

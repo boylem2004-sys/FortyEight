@@ -1,0 +1,25 @@
+{
+  "name": "@fortyeight/db",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@fortyeight/core": "workspace:*",
+    "@supabase/supabase-js": "2.119.0"
+  },
+  "devDependencies": {
+    "@fortyeight/config": "workspace:*",
+    "eslint": "9.39.5",
+    "typescript": "6.0.3",
+    "vitest": "5.1.0"
+  }
+}

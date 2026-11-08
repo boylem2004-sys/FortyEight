@@ -1,0 +1,122 @@
+/*
+ * FortyEight design tokens (Tailwind CSS v4 preset).
+ *
+ * The web app imports this after `@import "tailwindcss"`. The future Expo app
+ * can import the same file through NativeWind v5 (Tailwind v4 based), so both
+ * clients share one set of colors, radii, and spacing.
+ *
+ * Colors are OKLCH. Text pairs (x / x-foreground) are picked to pass WCAG AA.
+ */
+
+:root {
+  --radius: 0.875rem;
+
+  --background: oklch(0.985 0.004 85);
+  --foreground: oklch(0.2 0.02 270);
+
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.2 0.02 270);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.2 0.02 270);
+
+  /* Deep indigo: the main action color. White text on it passes AA. */
+  --primary: oklch(0.45 0.19 275);
+  --primary-foreground: oklch(0.985 0.003 275);
+
+  --secondary: oklch(0.95 0.018 275);
+  --secondary-foreground: oklch(0.32 0.1 275);
+
+  --muted: oklch(0.955 0.006 85);
+  --muted-foreground: oklch(0.47 0.02 270);
+
+  /* Warm sunset accent for highlights and selected chips. */
+  --accent: oklch(0.94 0.045 55);
+  --accent-foreground: oklch(0.38 0.11 40);
+
+  --highlight: oklch(0.72 0.16 45);
+
+  --destructive: oklch(0.55 0.21 27);
+  --destructive-foreground: oklch(0.985 0 0);
+
+  --success: oklch(0.52 0.13 155);
+  --warning: oklch(0.6 0.14 70);
+
+  --border: oklch(0.9 0.01 270);
+  --input: oklch(0.86 0.012 270);
+  --ring: oklch(0.55 0.19 275);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: oklch(0.17 0.02 270);
+    --foreground: oklch(0.95 0.008 85);
+
+    --card: oklch(0.21 0.022 270);
+    --card-foreground: oklch(0.95 0.008 85);
+    --popover: oklch(0.21 0.022 270);
+    --popover-foreground: oklch(0.95 0.008 85);
+
+    --primary: oklch(0.72 0.14 275);
+    --primary-foreground: oklch(0.17 0.03 275);
+
+    --secondary: oklch(0.27 0.04 275);
+    --secondary-foreground: oklch(0.92 0.02 275);
+
+    --muted: oklch(0.25 0.018 270);
+    --muted-foreground: oklch(0.74 0.015 270);
+
+    --accent: oklch(0.32 0.06 45);
+    --accent-foreground: oklch(0.93 0.05 55);
+
+    --highlight: oklch(0.76 0.15 50);
+
+    --destructive: oklch(0.68 0.18 25);
+    --destructive-foreground: oklch(0.17 0.02 270);
+
+    --success: oklch(0.72 0.13 155);
+    --warning: oklch(0.8 0.13 80);
+
+    --border: oklch(0.32 0.02 270);
+    --input: oklch(0.38 0.02 270);
+    --ring: oklch(0.72 0.14 275);
+  }
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-highlight: var(--highlight);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --radius-sm: calc(var(--radius) - 6px);
+  --radius-md: calc(var(--radius) - 3px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 10px);
+
+  /* Spacing tokens on top of Tailwind's default 0.25rem scale. */
+  --spacing-gutter: 1rem;
+  --spacing-section: 2.5rem;
+  --container-content: 40rem;
+
+  --font-sans:
+    ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}

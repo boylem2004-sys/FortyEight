@@ -1,0 +1,3 @@
+-- Local seed data, loaded by `pnpm db:reset`.
+-- Phase 0 needs none: sample suggestions live in packages/core as provider fixtures.
+-- Add local-only test data here (never production data).

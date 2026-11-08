@@ -1,0 +1,30 @@
+# deps
+node_modules/
+
+# builds
+.next/
+out/
+dist/
+.turbo/
+*.tsbuildinfo
+next-env.d.ts
+
+# tests
+coverage/
+playwright-report/
+test-results/
+blob-report/
+
+# env (keep the example)
+.env
+.env.*
+!.env.example
+
+# supabase local
+supabase/.branches/
+supabase/.temp/
+
+# misc
+.DS_Store
+*.log
+.vercel

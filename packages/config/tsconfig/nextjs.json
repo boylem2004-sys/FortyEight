@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "display": "FortyEight Next.js app",
+  "extends": "./base.json",
+  "compilerOptions": {
+    "lib": ["DOM", "DOM.Iterable", "ES2022"],
+    "jsx": "react-jsx",
+    "allowJs": true,
+    "incremental": true,
+    "types": ["node"],
+    "plugins": [{ "name": "next" }]
+  }
+}

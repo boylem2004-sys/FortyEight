@@ -1,0 +1,34 @@
+{
+  "$schema": "https://turborepo.com/schema.json",
+  "ui": "stream",
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": [".next/**", "!.next/cache/**"],
+      "env": [
+        "NEXT_PUBLIC_*",
+        "SUPABASE_SERVICE_ROLE_KEY",
+        "ANTHROPIC_API_KEY",
+        "AI_MODEL_*",
+        "TICKETMASTER_API_KEY",
+        "GOOGLE_MAPS_API_KEY",
+        "STRIPE_*",
+        "SENTRY_DSN",
+        "FREE_PLANS_PER_MONTH",
+        "VERCEL_*"
+      ]
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "lint": {},
+    "typecheck": {},
+    "test": {
+      "outputs": []
+    },
+    "test:e2e": {
+      "cache": false
+    }
+  }
+}

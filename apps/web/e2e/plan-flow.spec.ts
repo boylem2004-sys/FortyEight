@@ -2,7 +2,7 @@ import { expect, test } from "@playwright/test";
 
 test("plans a weekend end to end with sample data", async ({ page }) => {
   await page.goto("/");
-  await page.getByRole("link", { name: "Plan my weekend" }).click();
+  await page.getByRole("link", { name: "Plan my weekend" }).first().click();
 
   // 1. Location
   await expect(page.getByRole("heading", { name: "Where are you?" })).toBeVisible();

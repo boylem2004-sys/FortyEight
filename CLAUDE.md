@@ -15,6 +15,15 @@ Rules for working in this repo. Read `PRD.md` for what we are building and which
 - Write a Vitest test for any new function in `packages/core`.
 - Prefer small PRs, one feature per branch.
 
+## Branches and previews
+
+The full workflow is in `README.md` under "Working together".
+
+- `main` is the live site (Vercel production, https://forty-eight-eight.vercel.app). Never commit or push to `main` directly. Changes reach it only through a merged pull request.
+- Michael works on the `michael` branch and Liam on the `liam` branch. Use the branch the user names. Before starting, merge the latest `origin/main` into it.
+- Commit and push after each meaningful change so the branch preview updates. After pushing, give the user their preview link: `https://forty-eight-git-<branch>-boyle3.vercel.app`.
+- Merge pull requests with a merge commit, never squash or rebase, and never delete the `michael` or `liam` branch.
+
 ## Package map
 
 | Path                  | What it is                                                                                                                                |

@@ -118,7 +118,7 @@ liam branch ─────push──► Liam's preview link ─────┘
 
 | What              | Link                                              | Shows                          |
 | ----------------- | ------------------------------------------------- | ------------------------------ |
-| Live site         | (copy from Vercel: Project → Domains)             | Whatever is merged into `main` |
+| Live site         | https://forty-eight-eight.vercel.app              | Whatever is merged into `main` |
 | Michael's preview | https://forty-eight-git-michael-boyle3.vercel.app | The latest push to `michael`   |
 | Liam's preview    | https://forty-eight-git-liam-boyle3.vercel.app    | The latest push to `liam`      |
 

@@ -1,4 +1,5 @@
 import { CalendarDays, Sparkles, Users } from "lucide-react";
+import { BubbleWords } from "@/components/bubble-words";
 import { HeroActions } from "@/components/hero-actions";
 
 const STEPS = [
@@ -27,7 +28,7 @@ export default function LandingPage() {
           Your next 48 hours, sorted
         </p>
         <h1 className="text-4xl font-black tracking-tight text-balance sm:text-5xl">
-          What should we do this weekend?
+          <BubbleWords text="What should we do this weekend?" />
         </h1>
         <p className="mx-auto mt-4 max-w-xl text-lg text-pretty text-muted-foreground">
           FortyEight finds things to do near you that fit your group and your budget. A short list,

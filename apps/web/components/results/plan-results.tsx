@@ -17,6 +17,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { usePlansStore } from "@/lib/stores/plans-store";
 import { ResultsFilters } from "./results-filters";
+import { SharePlan } from "./share-plan";
 import { SuggestionCard } from "./suggestion-card";
 
 export function PlanResults({ plan }: { plan: Plan }) {
@@ -67,7 +68,8 @@ export function PlanResults({ plan }: { plan: Plan }) {
         </p>
       )}
 
-      <div className="flex flex-wrap gap-3">
+      <div className="flex flex-wrap items-center gap-3">
+        {plan.items.length > 0 && <SharePlan plan={plan} />}
         <Button onClick={regenerate} variant="secondary">
           <RefreshCw aria-hidden />
           Regenerate

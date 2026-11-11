@@ -12,6 +12,8 @@
 
   body {
     @apply bg-background text-foreground;
+    /* Full-bleed sections are 100vw wide. Clip so they never cause sideways scroll. */
+    overflow-x: clip;
     letter-spacing: -0.01em;
   }
 
@@ -41,6 +43,25 @@
 
 @utility animate-rise-in {
   animation: rise-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+/* Breaks out of the page container to the full width of the screen. */
+@utility full-bleed {
+  margin-inline: calc(50% - 50vw);
+}
+
+/* Falling sand in the hero hourglass. */
+@keyframes sand-fall {
+  to {
+    stroke-dashoffset: -24;
+  }
+}
+
+@utility animate-sand {
+  animation: sand-fall 0.5s linear infinite;
   @media (prefers-reduced-motion: reduce) {
     animation: none;
   }

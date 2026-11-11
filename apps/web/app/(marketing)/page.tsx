@@ -1,48 +1,59 @@
 import { BubbleWords } from "@/components/bubble-words";
-import { HeroActions } from "@/components/hero-actions";
-import { HowItWorksScroll, HowItWorksStatic } from "@/components/landing/how-it-works-scroll";
+import { HeroStart } from "@/components/landing/hero-start";
+import { HowItWorksStatic } from "@/components/landing/how-it-works-static";
+import { MapScene } from "@/components/landing/map-scene";
+import { WeekendActs } from "@/components/landing/weekend-acts";
 import { WeekendCompare } from "@/components/landing/weekend-compare";
-import { Logo } from "@/components/logo";
+import { WeekendCountdown } from "@/components/landing/weekend-countdown";
 
+/**
+ * The page tells one story on the way down: the hook and the first question,
+ * the problem, how it works (map scene), what it feels like (footage scene),
+ * then the first question again.
+ */
 export default function LandingPage() {
   return (
-    <div className="flex flex-col gap-6">
-      <section className="flex animate-rise-in flex-col items-center py-16 text-center sm:py-28">
-        <Logo variant="hero" className="mb-10" />
-        <h1 className="text-5xl leading-[1.05] font-semibold tracking-[-0.015em] text-balance sm:text-7xl md:text-[80px]">
-          <BubbleWords text="48 hours. Make them count." />
-        </h1>
-        <p className="mt-6 max-w-xl text-[19px] leading-normal text-pretty text-muted-foreground sm:text-[21px]">
-          FortyEight finds things to do near you that fit your group and your budget. A short list,
-          not an endless feed.
-        </p>
-        <HeroActions secondary className="mt-10 w-full justify-center" />
-        <p className="mt-5 text-xs text-muted-foreground">
-          No account needed. Takes about a minute.
-        </p>
+    <div className="flex flex-col">
+      <section className="grid animate-rise-in items-center gap-6 pb-16 text-center sm:pt-10 lg:min-h-[calc(100svh-8rem)] lg:grid-cols-[1.25fr_1fr] lg:gap-12 lg:text-left">
+        <WeekendCountdown className="lg:order-2" />
+        <div className="flex flex-col items-center lg:items-start">
+          <h1 className="text-5xl leading-[1.05] font-semibold tracking-[-0.015em] text-balance sm:text-7xl lg:text-[80px]">
+            <BubbleWords text="48 hours. Make them count." />
+          </h1>
+          <p className="mt-4 max-w-xl text-[17px] leading-normal text-pretty text-muted-foreground sm:text-[21px]">
+            Things to do near you that fit your group and your budget. A short list, not an endless
+            feed.
+          </p>
+          <HeroStart className="mt-6" />
+          <p className="mt-3 text-xs text-muted-foreground">
+            No account needed. Takes about a minute.
+          </p>
+        </div>
       </section>
 
       <WeekendCompare />
 
-      <div id="how" className="scroll-mt-16">
-        <HowItWorksScroll />
+      <div id="how" className="scroll-mt-11">
+        <MapScene />
         <HowItWorksStatic />
       </div>
 
+      <WeekendActs />
+
       <section
         aria-labelledby="cta"
-        className="rounded-card bg-card px-6 py-16 text-center sm:py-24"
+        className="flex flex-col items-center py-24 text-center sm:py-32"
       >
         <h2
           id="cta"
           className="text-4xl font-semibold tracking-tight text-balance sm:text-[56px] sm:leading-[1.07]"
         >
-          Ready for this weekend?
+          This weekend is still open.
         </h2>
-        <p className="mx-auto mt-4 max-w-md text-[17px] text-muted-foreground">
+        <p className="mt-4 max-w-md text-[17px] text-muted-foreground">
           Three questions now. A real plan before Friday.
         </p>
-        <HeroActions className="mt-8 justify-center" />
+        <HeroStart className="mt-8" />
       </section>
     </div>
   );

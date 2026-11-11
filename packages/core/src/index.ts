@@ -4,6 +4,7 @@ export * from "./schemas/preferences";
 export * from "./schemas/suggestion";
 export * from "./schemas/plan";
 export * from "./schemas/api";
+export * from "./schemas/account";
 
 // Domain helpers
 export * from "./budget";
@@ -12,6 +13,8 @@ export * from "./dates";
 export * from "./geo";
 export * from "./http";
 export * from "./price";
+export * from "./share";
+export * from "./weekend-clock";
 
 // Providers
 export * from "./providers/types";

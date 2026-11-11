@@ -1,14 +1,15 @@
 import { expect, test } from "@playwright/test";
 
 test("plans a weekend end to end with sample data", async ({ page }) => {
+  // Hand the page a share sheet, so sharing works the same on every browser.
+  await page.addInitScript(() => {
+    Object.defineProperty(navigator, "share", { value: async () => {}, configurable: true });
+  });
   await page.goto("/");
-  await page.getByRole("link", { name: "Start planning your weekend" }).first().click();
 
-  // 1. Location
-  await expect(page.getByRole("heading", { name: "Where are you?" })).toBeVisible();
-  await page.getByLabel("City or ZIP code").fill("Blue Bell, PA");
-  await page.getByText("10 miles", { exact: true }).click();
-  await page.getByRole("button", { name: "Next", exact: true }).click();
+  // 1. Location, answered right on the landing page
+  await page.getByLabel("City or ZIP code").first().fill("Blue Bell, PA");
+  await page.getByRole("button", { name: "Find my weekend" }).first().click();
 
   // 2. What sounds good
   await expect(page.getByRole("heading", { name: "What sounds good?" })).toBeVisible();
@@ -32,7 +33,7 @@ test("plans a weekend end to end with sample data", async ({ page }) => {
 
   // Dates + summary
   await expect(page.getByRole("heading", { name: "When are you going out?" })).toBeVisible();
-  await expect(page.getByText("Blue Bell, PA, within 10 miles")).toBeVisible();
+  await expect(page.getByText("Blue Bell, PA, within 25 miles")).toBeVisible();
   await page.getByRole("button", { name: "Plan my weekend" }).click();
 
   // Results
@@ -62,6 +63,56 @@ test("plans a weekend end to end with sample data", async ({ page }) => {
   await expect(
     page.getByRole("heading", { level: 1, name: /Your weekend near Blue Bell, PA/ }),
   ).toBeVisible();
+});
+
+test("sharing a plan offers to save your answers, once", async ({ page }) => {
+  await page.addInitScript(() => {
+    Object.defineProperty(navigator, "share", { value: async () => {}, configurable: true });
+  });
+  await page.goto("/");
+  await page.getByLabel("City or ZIP code").first().fill("Blue Bell, PA");
+  await page.getByRole("button", { name: "Find my weekend" }).first().click();
+  await page.getByText("Concerts", { exact: true }).click();
+  await page.getByRole("button", { name: "Next", exact: true }).click();
+  await page.getByRole("button", { name: "Pick dates" }).click();
+  await page.getByRole("button", { name: "Plan my weekend" }).click();
+  await expect(page).toHaveURL(/\/results\/[0-9a-f-]{36}$/);
+
+  await page.getByRole("button", { name: "Share with your group" }).click();
+  const dialog = page.getByRole("dialog", { name: "Skip the questions next time" });
+  await expect(dialog).toBeVisible();
+
+  // Name and email are needed. Phone is not.
+  await dialog.getByRole("button", { name: "Save my answers" }).click();
+  await expect(dialog.getByText("Enter your name")).toBeVisible();
+  await expect(dialog.getByText("Enter a valid email")).toBeVisible();
+  await dialog.getByLabel("Name").fill("Sam");
+  await dialog.getByLabel("Email").fill("sam@example.com");
+  await dialog.getByRole("button", { name: "Save my answers" }).click();
+  // The test server has no accounts set up, and says so instead of failing quietly.
+  await expect(dialog.getByText(/Accounts aren't switched on yet/)).toBeVisible();
+
+  // "Not now" is remembered, so the next share does not ask again.
+  await dialog.getByRole("button", { name: "Not now" }).click();
+  await expect(dialog).toBeHidden();
+  await page.getByRole("button", { name: "Share with your group" }).click();
+  await expect(dialog).toBeHidden();
+});
+
+test("the location step still works on its own", async ({ page }) => {
+  await page.goto("/onboarding/location");
+  await expect(page.getByRole("heading", { name: "Where are you?" })).toBeVisible();
+  await page.getByLabel("City or ZIP code").fill("Blue Bell, PA");
+  await page.getByText("10 miles", { exact: true }).click();
+  await page.getByRole("button", { name: "Next", exact: true }).click();
+  await expect(page.getByRole("heading", { name: "What sounds good?" })).toBeVisible();
+});
+
+test("the landing page asks for a place before moving on", async ({ page }) => {
+  await page.goto("/");
+  await page.getByRole("button", { name: "Find my weekend" }).first().click();
+  await expect(page.getByText("Enter a city or ZIP code").first()).toBeVisible();
+  await expect(page).toHaveURL(/\/$/);
 });
 
 test("a step will not continue until it is valid", async ({ page }) => {

@@ -1,18 +1,12 @@
 import { Badge } from "@/components/ui/badge";
 import { Reveal, RevealItem } from "./reveal";
+import { SAMPLE_WEEKEND as COULD } from "./sample-weekend";
 
 const NOW = [
   { when: "Fri 6:30 PM", what: "“What do you want to do?” “I don’t know, you pick.”" },
   { when: "Fri 9:00 PM", what: "Still scrolling. Nobody picked." },
   { when: "Sat 2:00 PM", what: "Same bar as last week." },
   { when: "Sun 7:00 PM", what: "“We should have done something.”" },
-] as const;
-
-const COULD = [
-  { when: "Fri 8:00 PM", kind: "Concert", what: "Live jazz, 2 miles away", price: "$20" },
-  { when: "Sat 10:30 AM", kind: "Outdoors", what: "Trail loop with a view", price: "Free" },
-  { when: "Sat 7:00 PM", kind: "Restaurant", what: "Tacos on a patio", price: "$18" },
-  { when: "Sun 11:00 AM", kind: "Market", what: "Farmers market and coffee", price: "$9" },
 ] as const;
 
 function Stat({ value, label, className }: { value: string; label: string; className?: string }) {

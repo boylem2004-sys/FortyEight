@@ -16,6 +16,7 @@ import { Sparkles } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { SignInNotice } from "@/components/account/sign-in-notice";
 import { FieldError } from "@/components/onboarding/field-error";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -102,6 +103,7 @@ function PlanSetupForm() {
 
   return (
     <form onSubmit={onSubmit} noValidate className="mx-auto flex max-w-content flex-col gap-6">
+      <SignInNotice />
       <div>
         <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">
           When are you going out?

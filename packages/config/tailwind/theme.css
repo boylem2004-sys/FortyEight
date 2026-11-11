@@ -49,6 +49,9 @@
   --success: #00d959;
   --warning: #ff791b;
 
+  /* Warm bronze for the hourglass sand, the one "object" color on the stage. */
+  --sand: #d9a066;
+
   --border: #333336;
   --input: #6e6e73;
   --ring: #2997ff;
@@ -72,6 +75,7 @@
   --color-highlight: var(--highlight);
   --color-highlight-wash: var(--highlight-wash);
   --color-link: var(--link);
+  --color-sand: var(--sand);
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
   --color-success: var(--success);

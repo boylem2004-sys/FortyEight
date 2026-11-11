@@ -27,7 +27,7 @@ export function BubbleWords({ text, className }: { text: string; className?: str
             >
               <span
                 className={cn(
-                  "absolute -inset-x-1.5 -inset-y-0.5 -z-10 rounded-full bg-accent shadow-sm",
+                  "absolute -inset-x-1.5 -inset-y-0.5 -z-10 rounded-full bg-accent",
                   "scale-50 opacity-0 transition duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)]",
                   "group-hover/word:scale-100 group-hover/word:opacity-100",
                   "motion-reduce:scale-100",

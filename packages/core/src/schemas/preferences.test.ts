@@ -1,9 +1,12 @@
 import { describe, expect, it } from "vitest";
 import { makePreferences } from "../test/factories";
 import {
+  activitiesStepSchema,
   firstIncompleteStep,
+  groupBudgetStepSchema,
   interestsStepSchema,
   isOnboardingStep,
+  LEGACY_ONBOARDING_STEPS,
   locationSchema,
   nextStep,
   ONBOARDING_STEPS,
@@ -79,23 +82,46 @@ describe("onboarding steps", () => {
     );
   });
 
+  it("validates the combined screens", () => {
+    expect(
+      activitiesStepSchema.safeParse({ eventTypes: ["concerts"], interestsFreeform: "" }).success,
+    ).toBe(true);
+    expect(
+      activitiesStepSchema.safeParse({ eventTypes: [], interestsFreeform: "karaoke" }).success,
+    ).toBe(false);
+    const { groupSize, budget } = makePreferences();
+    expect(groupBudgetStepSchema.safeParse({ groupSize, budget }).success).toBe(true);
+    expect(groupBudgetStepSchema.safeParse({ groupSize: 0, budget }).success).toBe(false);
+  });
+
   it("walks the steps in order", () => {
-    expect(nextStep("location")).toBe("interests");
-    expect(nextStep("budget")).toBeNull();
+    expect(nextStep("location")).toBe("activities");
+    expect(nextStep("group")).toBeNull();
     expect(previousStep("location")).toBeNull();
-    expect(previousStep("group")).toBe("event-types");
+    expect(previousStep("group")).toBe("activities");
   });
 
   it("recognizes step slugs", () => {
-    expect(isOnboardingStep("budget")).toBe(true);
+    expect(isOnboardingStep("group")).toBe(true);
+    expect(isOnboardingStep("budget")).toBe(false);
     expect(isOnboardingStep("dates")).toBe(false);
+  });
+
+  it("maps old step slugs to current ones", () => {
+    for (const step of Object.values(LEGACY_ONBOARDING_STEPS)) {
+      expect(isOnboardingStep(step)).toBe(true);
+    }
   });
 
   it("finds the first incomplete step", () => {
     expect(firstIncompleteStep({})).toBe("location");
     const prefs = makePreferences();
     expect(firstIncompleteStep(prefs)).toBeNull();
-    expect(firstIncompleteStep({ ...prefs, eventTypes: [] })).toBe("event-types");
-    expect(ONBOARDING_STEPS).toHaveLength(5);
+    expect(firstIncompleteStep({ ...prefs, eventTypes: [] })).toBe("activities");
+    expect(firstIncompleteStep({ ...prefs, interests: [], interestsFreeform: "" })).toBe(
+      "activities",
+    );
+    expect(firstIncompleteStep({ ...prefs, groupSize: 0 })).toBe("group");
+    expect(ONBOARDING_STEPS).toHaveLength(3);
   });
 });

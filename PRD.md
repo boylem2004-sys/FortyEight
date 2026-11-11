@@ -304,7 +304,7 @@ Goal: a deployed, empty-but-real skeleton where every layer is wired.
 4. `packages/api-client`: typed client for `/api/v1/health`, `/api/v1/preferences`, `/api/v1/plans`. Takes base URL + token getter so mobile can reuse it.
 5. `apps/web`: Next.js 16 App Router, Tailwind, shadcn/ui init, TanStack Query provider, Zustand store for onboarding.
    - Landing page.
-   - Onboarding wizard (5 steps from section 4) with validation from `packages/core`. Saves to local state.
+   - Onboarding wizard (3 screens covering the answers from section 4) with validation from `packages/core`. Saves to local state.
    - Results page that calls `POST /api/v1/plans` and renders fixture suggestions as cards.
 6. `/api/v1/health` returns `{ ok: true, version }`. `/api/v1/plans` validates input with zod and returns fixture results from stub providers.
 7. Supabase: init CLI, write migration for section 11 tables + RLS policies, generate types into `packages/db`. Add server and browser Supabase helpers. Auth middleware that accepts cookie OR bearer token.

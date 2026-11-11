@@ -3,7 +3,7 @@
 
 @layer base {
   html {
-    color-scheme: light dark;
+    color-scheme: dark;
   }
 
   * {
@@ -12,10 +12,36 @@
 
   body {
     @apply bg-background text-foreground;
+    letter-spacing: -0.01em;
+  }
+
+  /* Display type: weight 600 with tight tracking, never heavier. */
+  h1,
+  h2 {
+    letter-spacing: -0.02em;
   }
 
   /* Visible focus for keyboard users everywhere. */
   :focus-visible {
     @apply outline-2 outline-offset-2 outline-ring;
+  }
+}
+
+/* Soft entrance used by onboarding steps and landing sections. */
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@utility animate-rise-in {
+  animation: rise-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
   }
 }

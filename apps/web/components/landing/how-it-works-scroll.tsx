@@ -10,7 +10,7 @@ export const HOW_IT_WORKS_STEPS = [
   {
     icon: Users,
     title: "Tell us about your crew",
-    body: "Where you are, what you're into, how many of you, and what you want to spend.",
+    body: "Three quick questions: where you are, what sounds good, and who's in.",
   },
   {
     icon: CalendarDays,
@@ -87,7 +87,7 @@ export function HowItWorksScroll() {
             aria-hidden
             className="mx-auto w-full max-w-[min(100%,48svh)] md:order-2 md:max-w-none"
           >
-            <div className="overflow-hidden rounded-2xl border border-border shadow-lg">
+            <div className="overflow-hidden rounded-card">
               <HowItWorksPlayer frame={frame} />
             </div>
             <div className="mt-4 flex justify-center gap-2">
@@ -96,7 +96,7 @@ export function HowItWorksScroll() {
                   key={step.title}
                   className={cn(
                     "h-1.5 rounded-full transition-all duration-300",
-                    i === active ? "w-8 bg-primary" : "w-4 bg-border",
+                    i === active ? "w-8 bg-foreground" : "w-4 bg-secondary",
                   )}
                 />
               ))}
@@ -106,7 +106,7 @@ export function HowItWorksScroll() {
           <div className="md:order-1">
             <h2
               id="how-it-works"
-              className="mb-4 text-sm font-semibold tracking-wide text-accent-foreground uppercase"
+              className="mb-6 text-4xl font-semibold tracking-tight sm:text-5xl"
             >
               How it works
             </h2>
@@ -116,14 +116,12 @@ export function HowItWorksScroll() {
                   key={title}
                   aria-current={i === active ? "step" : undefined}
                   className={cn(
-                    "rounded-xl border p-4 transition-all duration-300",
-                    i === active
-                      ? "border-primary/40 bg-card shadow-sm"
-                      : "border-transparent opacity-45 max-md:sr-only",
+                    "rounded-3xl p-5 transition-all duration-300",
+                    i === active ? "bg-card" : "opacity-45 max-md:sr-only",
                   )}
                 >
                   <div className="flex items-center gap-3">
-                    <span className="grid size-9 shrink-0 place-items-center rounded-lg bg-accent text-accent-foreground">
+                    <span className="grid size-9 shrink-0 place-items-center rounded-full bg-accent text-accent-foreground">
                       <Icon aria-hidden className="size-5" />
                     </span>
                     <h3 className="font-semibold">
@@ -149,14 +147,17 @@ export function HowItWorksStatic() {
       aria-labelledby="how-it-works-static"
       className="hidden pb-section motion-reduce:block"
     >
-      <h2 id="how-it-works-static" className="sr-only">
+      <h2
+        id="how-it-works-static"
+        className="mb-6 text-4xl font-semibold tracking-tight sm:text-5xl"
+      >
         How it works
       </h2>
       <ol className="grid gap-4 sm:grid-cols-3">
         {HOW_IT_WORKS_STEPS.map(({ icon: Icon, title, body }, i) => (
-          <li key={title} className="rounded-xl border border-border bg-card p-5 shadow-sm">
+          <li key={title} className="rounded-card bg-card p-6">
             <div className="flex items-center gap-3">
-              <span className="grid size-9 place-items-center rounded-lg bg-accent text-accent-foreground">
+              <span className="grid size-9 place-items-center rounded-full bg-accent text-accent-foreground">
                 <Icon aria-hidden className="size-5" />
               </span>
               <span className="text-sm font-semibold text-muted-foreground">Step {i + 1}</span>

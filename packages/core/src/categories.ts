@@ -1,4 +1,10 @@
-import { CATEGORIES, type Category, type EventType, type Interest } from "./schemas/enums";
+import {
+  CATEGORIES,
+  INTERESTS,
+  type Category,
+  type EventType,
+  type Interest,
+} from "./schemas/enums";
 
 /** Which suggestion categories each liked event type maps to. */
 export const EVENT_TYPE_CATEGORIES: Record<EventType, readonly Category[]> = {
@@ -28,6 +34,29 @@ export const INTEREST_CATEGORIES: Record<Interest, readonly Category[]> = {
   markets: ["market", "festival"],
   learning: ["class", "attraction"],
 };
+
+/** Interests implied by each event type. Onboarding only asks for event types. */
+export const EVENT_TYPE_INTERESTS: Record<EventType, readonly Interest[]> = {
+  concerts: ["live_music"],
+  sports_games: ["sports"],
+  movies: ["arts"],
+  theater: ["arts"],
+  comedy_shows: ["comedy"],
+  festivals: ["markets", "food_drink"],
+  bars_breweries: ["nightlife", "food_drink"],
+  restaurants: ["food_drink"],
+  outdoor_activities: ["outdoors", "fitness"],
+  classes_workshops: ["learning"],
+};
+
+/** Unique interests for the picked event types, in the standard interest order. */
+export function interestsForEventTypes(eventTypes: readonly EventType[]): Interest[] {
+  const set = new Set<Interest>();
+  for (const type of eventTypes) {
+    for (const interest of EVENT_TYPE_INTERESTS[type]) set.add(interest);
+  }
+  return INTERESTS.filter((i) => set.has(i));
+}
 
 /**
  * Categories to search for. Liked event types decide the search. If none are

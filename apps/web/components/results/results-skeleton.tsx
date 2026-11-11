@@ -9,7 +9,7 @@ export function ResultsSkeleton({ label = "Loading your plan..." }: { label?: st
       <Skeleton className="h-9 w-2/3" />
       <div className="grid gap-4 md:grid-cols-2">
         {Array.from({ length: 4 }, (_, i) => (
-          <Skeleton key={i} className="h-56 w-full rounded-xl" />
+          <Skeleton key={i} className="h-56 w-full rounded-card" />
         ))}
       </div>
     </div>

@@ -1,8 +1,10 @@
 import { describe, expect, it } from "vitest";
 import {
   EVENT_TYPE_CATEGORIES,
+  EVENT_TYPE_INTERESTS,
   eventTypesMatchingCategory,
   INTEREST_CATEGORIES,
+  interestsForEventTypes,
   interestsMatchingCategory,
   targetCategories,
 } from "./categories";
@@ -12,6 +14,19 @@ describe("categories", () => {
   it("maps every event type and interest to at least one category", () => {
     for (const t of EVENT_TYPES) expect(EVENT_TYPE_CATEGORIES[t].length).toBeGreaterThan(0);
     for (const i of INTERESTS) expect(INTEREST_CATEGORIES[i].length).toBeGreaterThan(0);
+  });
+
+  it("gives every event type at least one interest", () => {
+    for (const t of EVENT_TYPES) expect(EVENT_TYPE_INTERESTS[t].length).toBeGreaterThan(0);
+  });
+
+  it("derives unique interests from event types, in the standard order", () => {
+    expect(interestsForEventTypes(["restaurants", "bars_breweries", "concerts"])).toEqual([
+      "live_music",
+      "food_drink",
+      "nightlife",
+    ]);
+    expect(interestsForEventTypes([])).toEqual([]);
   });
 
   it("builds target categories from event types, without repeats", () => {

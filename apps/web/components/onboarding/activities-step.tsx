@@ -2,10 +2,11 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
-  INTEREST_LABELS,
-  INTERESTS,
+  activitiesStepSchema,
+  EVENT_TYPE_LABELS,
+  EVENT_TYPES,
+  interestsForEventTypes,
   INTERESTS_FREEFORM_MAX,
-  interestsStepSchema,
 } from "@fortyeight/core";
 import { useRouter } from "next/navigation";
 import { Controller, useForm } from "react-hook-form";
@@ -17,47 +18,48 @@ import { ChipCheckboxGroup } from "./chip-group";
 import { FieldError } from "./field-error";
 import { StepShell } from "./step-shell";
 
-const OPTIONS = INTERESTS.map((value) => ({ value, label: INTEREST_LABELS[value] }));
+const OPTIONS = EVENT_TYPES.map((value) => ({ value, label: EVENT_TYPE_LABELS[value] }));
 
-export function InterestsStepForm() {
+export function ActivitiesStepForm() {
   const router = useRouter();
   const draft = useOnboardingStore((s) => s.draft);
   const update = useOnboardingStore((s) => s.update);
 
   const { control, register, handleSubmit, formState } = useForm({
-    resolver: zodResolver(interestsStepSchema),
-    defaultValues: { interests: draft.interests, interestsFreeform: draft.interestsFreeform },
+    resolver: zodResolver(activitiesStepSchema),
+    defaultValues: { eventTypes: draft.eventTypes, interestsFreeform: draft.interestsFreeform },
   });
-  const error = formState.errors.interests?.message ?? formState.errors.interests?.root?.message;
+  const error = formState.errors.eventTypes?.message ?? formState.errors.eventTypes?.root?.message;
 
   const onSubmit = handleSubmit((values) => {
-    update(values);
-    router.push(hrefAfterStep("interests"));
+    // One question on screen; the interests used for ranking come from the picks.
+    update({ ...values, interests: interestsForEventTypes(values.eventTypes) });
+    router.push(hrefAfterStep("activities"));
   });
 
   return (
     <StepShell
-      step="interests"
-      title="What are you into?"
-      description="Pick everything your group enjoys."
+      step="activities"
+      title="What sounds good?"
+      description="Tap everything your group would say yes to."
       onSubmit={onSubmit}
     >
       <Controller
         control={control}
-        name="interests"
+        name="eventTypes"
         render={({ field }) => (
           <ChipCheckboxGroup
-            legend="Interests"
+            legend="Things to do"
             hideLegend
             options={OPTIONS}
             value={field.value}
             onChange={field.onChange}
             invalid={Boolean(error)}
-            errorId="interests-error"
+            errorId="activities-error"
           />
         )}
       />
-      <FieldError id="interests-error" message={error} />
+      <FieldError id="activities-error" message={error} />
 
       <div className="flex flex-col gap-2">
         <Label htmlFor="interests-freeform">Anything else? (optional)</Label>

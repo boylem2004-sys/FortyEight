@@ -37,7 +37,7 @@ export function PlanResults({ plan }: { plan: Plan }) {
   return (
     <div className="flex flex-col gap-6">
       <header className="flex flex-col gap-2">
-        <h1 className="text-3xl font-bold tracking-tight text-balance">
+        <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl text-balance">
           Your weekend near {plan.location.label}
         </h1>
         <p className="text-muted-foreground">
@@ -48,7 +48,7 @@ export function PlanResults({ plan }: { plan: Plan }) {
       </header>
 
       {plan.meta.fixtureData && (
-        <p className="flex gap-2 rounded-lg border border-border bg-muted p-3 text-sm">
+        <p className="flex gap-2 rounded-2xl bg-card p-4 text-sm">
           <FlaskConical aria-hidden className="mt-0.5 size-4 shrink-0" />
           <span>
             <span className="font-semibold">Sample data.</span> These picks are made up so you can
@@ -58,7 +58,7 @@ export function PlanResults({ plan }: { plan: Plan }) {
       )}
 
       {plan.location.approximate && (
-        <p className="flex gap-2 rounded-lg border border-warning/40 bg-warning/10 p-3 text-sm">
+        <p className="flex gap-2 rounded-2xl bg-highlight-wash p-4 text-highlight text-sm">
           <Info aria-hidden className="mt-0.5 size-4 shrink-0" />
           <span>
             We can&apos;t look up &ldquo;{typedLabel}&rdquo; yet, so these are around{" "}
@@ -84,7 +84,7 @@ export function PlanResults({ plan }: { plan: Plan }) {
       </div>
 
       {plan.items.length === 0 ? (
-        <div className="rounded-xl border border-dashed border-border p-8 text-center">
+        <div className="rounded-card border border-dashed border-border p-8 text-center">
           <h2 className="text-lg font-semibold">Nothing fit this time</h2>
           <p className="mt-1 text-muted-foreground">
             Try a bigger travel radius, a higher budget, or more event types.
@@ -110,7 +110,7 @@ export function PlanResults({ plan }: { plan: Plan }) {
           </p>
 
           {visible.length === 0 ? (
-            <div className="rounded-xl border border-dashed border-border p-8 text-center">
+            <div className="rounded-card border border-dashed border-border p-8 text-center">
               <h2 className="text-lg font-semibold">No picks match these filters</h2>
               <Button
                 variant="outline"

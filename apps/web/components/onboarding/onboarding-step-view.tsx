@@ -3,18 +3,14 @@
 import type { OnboardingStep } from "@fortyeight/core";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useHydrated } from "@/lib/hooks/use-hydrated";
-import { BudgetStepForm } from "./budget-step";
-import { EventTypesStepForm } from "./event-types-step";
+import { ActivitiesStepForm } from "./activities-step";
 import { GroupStepForm } from "./group-step";
-import { InterestsStepForm } from "./interests-step";
 import { LocationStepForm } from "./location-step";
 
 const FORMS: Record<OnboardingStep, () => React.JSX.Element> = {
   location: LocationStepForm,
-  interests: InterestsStepForm,
-  "event-types": EventTypesStepForm,
+  activities: ActivitiesStepForm,
   group: GroupStepForm,
-  budget: BudgetStepForm,
 };
 
 export function OnboardingStepView({ step }: { step: OnboardingStep }) {

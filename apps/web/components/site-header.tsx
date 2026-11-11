@@ -11,7 +11,7 @@ function PreviewStrip() {
   if (process.env.VERCEL_ENV !== "preview") return null;
   const branch = process.env.VERCEL_GIT_COMMIT_REF;
   return (
-    <div className="bg-warning/15 px-gutter py-1.5 text-center text-xs font-semibold text-foreground [overflow-wrap:anywhere]">
+    <div className="bg-highlight-wash px-gutter py-1.5 text-center text-xs font-semibold text-highlight [overflow-wrap:anywhere]">
       Preview{branch ? ` of ${branch}` : ""}, not the live site
     </div>
   );
@@ -19,15 +19,23 @@ function PreviewStrip() {
 
 export function SiteHeader() {
   return (
-    <header className="border-b border-border/70 bg-background/90 backdrop-blur supports-[backdrop-filter]:bg-background/75">
+    <header className="sticky top-0 z-40 bg-card/80 backdrop-blur-xl">
       <PreviewStrip />
-      <div className="mx-auto flex h-16 w-full max-w-5xl items-center justify-between px-gutter">
-        <Link href="/" className="rounded-lg" aria-label="FortyEight home">
+      <div className="mx-auto flex h-11 w-full max-w-5xl items-center justify-between px-gutter">
+        <Link href="/" className="rounded-full" aria-label="FortyEight home">
           <Logo />
         </Link>
-        <Button asChild variant="ghost" size="sm">
-          <Link href="/plan">Plan a weekend</Link>
-        </Button>
+        <nav aria-label="Main" className="flex items-center gap-5">
+          <Link
+            href="/#how"
+            className="rounded-full text-xs text-foreground/80 transition-colors hover:text-foreground max-sm:hidden"
+          >
+            How it works
+          </Link>
+          <Button asChild size="sm">
+            <Link href="/plan">Plan a weekend</Link>
+          </Button>
+        </nav>
       </div>
     </header>
   );

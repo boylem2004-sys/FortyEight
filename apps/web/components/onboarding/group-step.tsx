@@ -1,27 +1,53 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { GROUP_SIZE_MAX, GROUP_SIZE_MIN, groupStepSchema } from "@fortyeight/core";
+import {
+  BUDGET_PRESETS,
+  budgetFromPreset,
+  DEFAULT_BUDGET_PRESET_ID,
+  formatCents,
+  GROUP_SIZE_MAX,
+  GROUP_SIZE_MIN,
+  groupBudgetStepSchema,
+  presetForBudget,
+  type Budget,
+} from "@fortyeight/core";
 import { Minus, Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, useForm, useWatch } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { hrefAfterStep } from "@/lib/onboarding";
 import { useOnboardingStore } from "@/lib/stores/onboarding-store";
+import { ChipRadioGroup } from "./chip-group";
 import { FieldError } from "./field-error";
 import { StepShell } from "./step-shell";
 
+const BUDGET_OPTIONS = BUDGET_PRESETS.map((p) => ({ value: p.id, label: p.label }));
+
+function budgetHint(budget: Budget, groupSize: number): string {
+  if (budget.maxCents === 0) return "Only free things.";
+  if (budget.maxCents === null) return `${formatCents(budget.minCents)} or more per person.`;
+  if (!Number.isFinite(groupSize) || groupSize <= 1) {
+    return `Up to ${formatCents(budget.maxCents)} for you.`;
+  }
+  return `Up to ${formatCents(budget.maxCents * groupSize)} for your group of ${groupSize}.`;
+}
+
+/** Last question: how many people, and what each can spend. */
 export function GroupStepForm() {
   const router = useRouter();
   const draft = useOnboardingStore((s) => s.draft);
   const update = useOnboardingStore((s) => s.update);
 
   const { control, handleSubmit, formState } = useForm({
-    resolver: zodResolver(groupStepSchema),
-    defaultValues: { groupSize: draft.groupSize },
+    resolver: zodResolver(groupBudgetStepSchema),
+    defaultValues: { groupSize: draft.groupSize, budget: draft.budget },
   });
-  const error = formState.errors.groupSize?.message;
+  const groupSize = useWatch({ control, name: "groupSize" });
+  const sizeError = formState.errors.groupSize?.message;
+  const budgetError =
+    formState.errors.budget?.message ?? formState.errors.budget?.maxCents?.message;
 
   const onSubmit = handleSubmit((values) => {
     update(values);
@@ -31,9 +57,10 @@ export function GroupStepForm() {
   return (
     <StepShell
       step="group"
-      title="How many of you?"
-      description="Count everyone, including you. We'll show prices for the whole group."
+      title="Who's in, and what's the budget?"
+      description="We'll show prices for the whole group."
       onSubmit={onSubmit}
+      submitLabel="Pick dates"
     >
       <Controller
         control={control}
@@ -48,7 +75,7 @@ export function GroupStepForm() {
               <div className="flex items-center gap-3">
                 <Button
                   type="button"
-                  variant="outline"
+                  variant="secondary"
                   size="icon"
                   aria-label="One fewer person"
                   onClick={() => set(value - 1)}
@@ -67,13 +94,13 @@ export function GroupStepForm() {
                     field.onChange(e.target.value === "" ? Number.NaN : Number(e.target.value))
                   }
                   onBlur={field.onBlur}
-                  aria-invalid={error ? true : undefined}
-                  aria-describedby={error ? "group-size-error" : undefined}
-                  className="h-14 w-24 rounded-lg border border-input bg-card text-center text-2xl font-bold outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/40"
+                  aria-invalid={sizeError ? true : undefined}
+                  aria-describedby={sizeError ? "group-size-error" : "group-size-hint"}
+                  className="h-16 w-24 [appearance:textfield] rounded-3xl bg-card text-center text-5xl font-semibold tracking-tight outline-none focus-visible:ring-3 focus-visible:ring-ring/60 [&::-webkit-inner-spin-button]:appearance-none"
                 />
                 <Button
                   type="button"
-                  variant="outline"
+                  variant="secondary"
                   size="icon"
                   aria-label="One more person"
                   onClick={() => set(value + 1)}
@@ -82,14 +109,33 @@ export function GroupStepForm() {
                   <Plus aria-hidden />
                 </Button>
               </div>
-              <p className="text-sm text-muted-foreground">
-                {GROUP_SIZE_MIN} to {GROUP_SIZE_MAX} people.
+              <p id="group-size-hint" className="text-sm text-muted-foreground">
+                Count everyone, including you. {GROUP_SIZE_MIN} to {GROUP_SIZE_MAX} people.
               </p>
+              <FieldError id="group-size-error" message={sizeError} />
             </div>
           );
         }}
       />
-      <FieldError id="group-size-error" message={error} />
+
+      <Controller
+        control={control}
+        name="budget"
+        render={({ field }) => (
+          <div className="flex flex-col gap-3">
+            <ChipRadioGroup
+              legend="Budget per person, for the whole weekend"
+              options={BUDGET_OPTIONS}
+              value={presetForBudget(field.value)?.id ?? DEFAULT_BUDGET_PRESET_ID}
+              onChange={(id) => field.onChange(budgetFromPreset(id))}
+            />
+            <p className="text-sm text-muted-foreground" aria-live="polite">
+              {budgetHint(field.value, groupSize)}
+            </p>
+            <FieldError id="budget-error" message={budgetError} />
+          </div>
+        )}
+      />
     </StepShell>
   );
 }

@@ -56,7 +56,7 @@ export function LocationStepForm() {
     <StepShell
       step="location"
       title="Where are you?"
-      description="We'll look for things to do around here."
+      description="Three quick questions, then your picks."
       onSubmit={onSubmit}
     >
       <div className="flex flex-col gap-3">

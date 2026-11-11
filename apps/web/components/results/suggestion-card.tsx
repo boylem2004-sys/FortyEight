@@ -26,9 +26,9 @@ export function SuggestionCard({ item, rank, groupSize, timezone }: Props) {
 
   return (
     <Card className="flex h-full flex-col" aria-labelledby={titleId} role="article">
-      <div className="flex flex-1 flex-col gap-4 p-5">
+      <div className="flex flex-1 flex-col gap-4 p-6">
         <div className="flex flex-wrap items-center gap-2">
-          <span className="text-sm font-bold text-muted-foreground">
+          <span className="text-sm font-semibold text-muted-foreground">
             <span className="sr-only">Pick </span>
             <span aria-hidden>#</span>
             {rank}
@@ -66,7 +66,7 @@ export function SuggestionCard({ item, rank, groupSize, timezone }: Props) {
         </ul>
 
         {item.fitReason && (
-          <div className="rounded-lg bg-secondary/70 p-3 text-sm text-secondary-foreground">
+          <div className="rounded-2xl bg-background p-4 text-sm text-secondary-foreground">
             <p className="flex gap-2">
               <Sparkles aria-hidden className="mt-0.5 size-4 shrink-0" />
               <span>
@@ -79,7 +79,7 @@ export function SuggestionCard({ item, rank, groupSize, timezone }: Props) {
       </div>
 
       {item.url && (
-        <div className="p-5 pt-0">
+        <div className="p-6 pt-0">
           <Button asChild variant="outline" className="w-full">
             <a href={item.url} target="_blank" rel="noopener noreferrer">
               View details

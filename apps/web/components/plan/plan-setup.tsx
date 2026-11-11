@@ -98,12 +98,14 @@ function PlanSetupForm() {
   }
 
   const optionClass =
-    "flex cursor-pointer items-start gap-3 rounded-xl border border-input bg-card p-4 has-checked:border-primary has-checked:ring-2 has-checked:ring-primary/30 has-focus-visible:ring-3 has-focus-visible:ring-ring/60";
+    "flex cursor-pointer items-start gap-3 rounded-3xl border border-transparent bg-card p-5 has-checked:border-foreground has-focus-visible:ring-3 has-focus-visible:ring-ring/60";
 
   return (
     <form onSubmit={onSubmit} noValidate className="mx-auto flex max-w-content flex-col gap-6">
       <div>
-        <h1 className="text-3xl font-bold tracking-tight">When are you going out?</h1>
+        <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">
+          When are you going out?
+        </h1>
         <p className="mt-2 text-muted-foreground">Then we&apos;ll find your best options.</p>
       </div>
 
@@ -113,7 +115,7 @@ function PlanSetupForm() {
           <input
             type="radio"
             name="date-mode"
-            className="mt-1 accent-primary"
+            className="mt-1 accent-foreground"
             checked={mode === "weekend"}
             onChange={() => setMode("weekend")}
           />
@@ -126,7 +128,7 @@ function PlanSetupForm() {
           <input
             type="radio"
             name="date-mode"
-            className="mt-1 accent-primary"
+            className="mt-1 accent-foreground"
             checked={mode === "custom"}
             onChange={() => setMode("custom")}
           />

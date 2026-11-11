@@ -10,7 +10,7 @@ interface Option<T extends string | number> {
 }
 
 const chipClass =
-  "inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-input bg-card px-4 py-2.5 text-sm font-medium transition-colors select-none hover:bg-muted has-checked:border-primary has-checked:bg-primary has-checked:text-primary-foreground has-focus-visible:ring-3 has-focus-visible:ring-ring/60";
+  "inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-input bg-foreground/[0.04] px-4 py-2.5 text-sm font-medium transition-[background-color,color,border-color,scale] duration-200 select-none hover:bg-foreground/10 active:scale-95 has-checked:border-foreground has-checked:bg-foreground has-checked:text-background has-focus-visible:ring-3 has-focus-visible:ring-ring/60";
 
 interface ChipCheckboxGroupProps<T extends string> {
   legend: string;

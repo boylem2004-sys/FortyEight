@@ -78,11 +78,29 @@ export const budgetStepSchema = z.object({
   budget: budgetSchema,
 });
 
+/**
+ * "What sounds good?" The user only picks event types (plus optional free
+ * text). Interests are filled in from those picks with
+ * `interestsForEventTypes`, so the saved preferences keep the same shape.
+ */
+export const activitiesStepSchema = z.object({
+  eventTypes: eventTypesField,
+  interestsFreeform: interestsFreeformField,
+});
+
+/** Group size and budget share one screen. */
+export const groupBudgetStepSchema = z.object({
+  groupSize: groupSizeSchema,
+  budget: budgetSchema,
+});
+
 export type LocationStep = z.infer<typeof locationStepSchema>;
 export type InterestsStep = z.infer<typeof interestsStepSchema>;
 export type EventTypesStep = z.infer<typeof eventTypesStepSchema>;
 export type GroupStep = z.infer<typeof groupStepSchema>;
 export type BudgetStep = z.infer<typeof budgetStepSchema>;
+export type ActivitiesStep = z.infer<typeof activitiesStepSchema>;
+export type GroupBudgetStep = z.infer<typeof groupBudgetStepSchema>;
 
 /** Full saved preferences: the union of every onboarding step. */
 export const preferencesSchema = z
@@ -103,23 +121,29 @@ export type Preferences = z.infer<typeof preferencesSchema>;
 /* Onboarding step order.                                             */
 /* ------------------------------------------------------------------ */
 
-export const ONBOARDING_STEPS = [
-  "location",
-  "interests",
-  "event-types",
-  "group",
-  "budget",
-] as const;
+export const ONBOARDING_STEPS = ["location", "activities", "group"] as const;
 export const onboardingStepSchema = z.enum(ONBOARDING_STEPS);
 export type OnboardingStep = z.infer<typeof onboardingStepSchema>;
 
+/** What a saved draft needs for each step to count as done. */
 export const ONBOARDING_STEP_SCHEMAS = {
   location: locationStepSchema,
-  interests: interestsStepSchema,
-  "event-types": eventTypesStepSchema,
-  group: groupStepSchema,
-  budget: budgetStepSchema,
+  activities: z
+    .object({
+      eventTypes: eventTypesField,
+      interests: interestsField,
+      interestsFreeform: interestsFreeformField,
+    })
+    .refine(hasSomeInterest, someInterestIssue),
+  group: groupBudgetStepSchema,
 } as const satisfies Record<OnboardingStep, z.ZodType>;
+
+/** Old step URLs (the flow used to have five screens) and where they live now. */
+export const LEGACY_ONBOARDING_STEPS = {
+  interests: "activities",
+  "event-types": "activities",
+  budget: "group",
+} as const satisfies Record<string, OnboardingStep>;
 
 export function isOnboardingStep(value: string): value is OnboardingStep {
   return (ONBOARDING_STEPS as readonly string[]).includes(value);

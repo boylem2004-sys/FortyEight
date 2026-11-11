@@ -14,10 +14,7 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#fbfaf7" },
-    { media: "(prefers-color-scheme: dark)", color: "#161722" },
-  ],
+  themeColor: "#000000",
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
@@ -26,13 +23,13 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <body className="min-h-dvh font-sans antialiased">
         <a
           href="#main"
-          className="sr-only rounded-lg bg-primary px-4 py-2 text-primary-foreground focus:not-sr-only focus:absolute focus:top-3 focus:left-3 focus:z-50"
+          className="sr-only rounded-full bg-primary px-4 py-2 text-primary-foreground focus:not-sr-only focus:absolute focus:top-3 focus:left-3 focus:z-50"
         >
           Skip to content
         </a>
         <Providers>
           <SiteHeader />
-          <main id="main" className="mx-auto w-full max-w-5xl px-gutter pt-6 pb-24">
+          <main id="main" className="mx-auto w-full max-w-5xl px-gutter pt-8 pb-24">
             {children}
           </main>
         </Providers>

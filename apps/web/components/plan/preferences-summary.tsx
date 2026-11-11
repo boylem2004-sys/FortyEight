@@ -1,7 +1,6 @@
 import {
   budgetLabel,
   EVENT_TYPE_LABELS,
-  INTEREST_LABELS,
   type OnboardingStep,
   type Preferences,
 } from "@fortyeight/core";
@@ -16,7 +15,7 @@ function Row({ label, value, step }: { label: string; value: string; step: Onboa
       </div>
       <Link
         href={`/onboarding/${step}`}
-        className="shrink-0 rounded text-sm font-semibold text-primary underline-offset-4 hover:underline"
+        className="shrink-0 rounded text-sm font-semibold text-link underline-offset-4 hover:underline"
       >
         Edit<span className="sr-only"> {label.toLowerCase()}</span>
       </Link>
@@ -25,8 +24,8 @@ function Row({ label, value, step }: { label: string; value: string; step: Onboa
 }
 
 export function PreferencesSummary({ preferences: p }: { preferences: Preferences }) {
-  const interests = [
-    ...p.interests.map((i) => INTEREST_LABELS[i]),
+  const likes = [
+    ...p.eventTypes.map((t) => EVENT_TYPE_LABELS[t]),
     p.interestsFreeform.trim(),
   ].filter(Boolean);
   return (
@@ -36,18 +35,13 @@ export function PreferencesSummary({ preferences: p }: { preferences: Preference
         value={`${p.location.label}, within ${p.radiusMiles} miles`}
         step="location"
       />
-      <Row label="Into" value={interests.join(", ")} step="interests" />
-      <Row
-        label="Likes"
-        value={p.eventTypes.map((t) => EVENT_TYPE_LABELS[t]).join(", ")}
-        step="event-types"
-      />
+      <Row label="Into" value={likes.join(", ")} step="activities" />
       <Row
         label="Group"
         value={p.groupSize === 1 ? "Just me" : `${p.groupSize} people`}
         step="group"
       />
-      <Row label="Budget" value={`${budgetLabel(p.budget)} per person`} step="budget" />
+      <Row label="Budget" value={`${budgetLabel(p.budget)} per person`} step="group" />
     </dl>
   );
 }
